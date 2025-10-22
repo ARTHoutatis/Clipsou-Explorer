@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clipsou Explorer 1 - Course FiveM GTA V</title>
+    <link rel="icon" type="image/png" href="page-1-Photoroom.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Teko:wght@700&family=Racing+Sans+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header Navigation */
+        .header {
+            background-color: rgba(15, 15, 15, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.6s ease-out;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background-color: rgba(10, 10, 10, 0.98);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            padding: 0.8rem 2rem;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-small {
+            height: 40px;
+            width: auto;
+        }
+
+        .brand-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: #ffffff;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: rgba(15, 15, 15, 0.98);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 5rem 2rem 2rem;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mobile-nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .mobile-nav a:hover {
+            color: #4facfe;
+            transform: translateX(10px);
+        }
+
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 10vh 2rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 4rem;
+            align-items: flex-end;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.15) 50%, transparent 100%);
+        }
+
+        .hero-content {
+            animation: fadeInLeft 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .version-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #a0a0a0;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+            color: #ffffff;
+            padding: 0.25rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: pulseLive 2s ease-in-out infinite;
+        }
+
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseLive {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 8px rgba(255, 68, 68, 0);
+            }
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        h1 {
+            font-family: 'Teko', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 0.95;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-container {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            background-color: #ffffff;
+            color: #0a0a0a;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .cta-secondary {
+            padding: 1rem 2rem;
+            background-color: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-secondary:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Hero Image */
+        .hero-visual {
+            position: relative;
+            animation: fadeInRight 0.8s ease-out 0.4s both;
+            width: 100%;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Experience Slider */
+        .experience-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 1rem;
+        }
+
+        .experience-slider-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .experience-slider {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .experience-slide {
+            min-width: 100%;
+            padding: 3rem 2rem;
+        }
+
+        .experience-controls {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            padding: 0 1rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 10;
+        }
+
+        .experience-arrows {
+            display: flex;
+            gap: 1rem;
+            position: relative;
+            z-index: 20;
+        }
+
+        .experience-arrow {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            position: relative;
+            z-index: 30;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .experience-arrow:hover {
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.5) 0%, rgba(0, 242, 254, 0.3) 100%);
+            border-color: rgba(79, 172, 254, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .experience-arrow:active {
+            transform: scale(0.95);
+            background: rgba(79, 172, 254, 0.3);
+        }
+
+        .experience-arrow:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .experience-tabs {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        @media (min-width: 969px) {
+            .experience-tabs {
+                display: flex !important;
+            }
+
+            .circuit-card {
+                display: block;
+                overflow: hidden;
+                position: relative;
+                height: auto;
+            }
+
+            .circuit-image {
+                border-radius: 0;
+                position: relative;
+                width: 100%;
+                aspect-ratio: 16 / 9;
+            }
+
+            .circuit-info {
+                position: relative;
+                padding: 1.5rem;
+                background: linear-gradient(135deg, rgba(20, 20, 20, 0.95) 0%, rgba(15, 15, 15, 0.98) 100%);
+            }
+
+            .circuit-name {
+                color: #ffffff;
+                text-shadow: none;
+            }
+
+            .circuit-description {
+                color: #a0a0a0;
+                text-shadow: none;
+            }
+
+            .pilote-card {
+                flex-direction: row;
+                text-align: left;
+            }
+
+            .pilote-name {
+                font-size: 1.6rem;
+            }
+
+            .ecurie-name {
+                font-size: 1.05rem;
+            }
+
+            .sponsor-logo {
+                width: 120px;
+                height: 120px;
+                margin-left: 1.5rem;
+                margin-top: 0;
+            }
+        }
+
+        .experience-tab {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: 500;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        .experience-tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .experience-tab.active {
+            color: #0a0a0a;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-color: transparent;
+            box-shadow: 0 12px 24px rgba(79, 172, 254, 0.35);
+        }
+
+        /* Features Grid */
+        .features-section {
+            padding: 2rem 1rem;
+        }
+
+        .features-section h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .features-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.6s ease-out both;
+            backdrop-filter: blur(10px);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card:hover {
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.1) 0%, rgba(0, 242, 254, 0.05) 100%);
+            border-color: rgba(79, 172, 254, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(79, 172, 254, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            height: 60px;
+        }
+
+        .feature-icon img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .feature-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-description {
+            color: #808080;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Pilotes Section */
+        .pilotes-section {
+            padding: 2rem 1rem;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 2px;
+        }
+
+        .pilotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .pilote-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .pilote-card:hover {
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.12) 0%, rgba(0, 242, 254, 0.06) 100%);
+            border-color: rgba(79, 172, 254, 0.4);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(79, 172, 254, 0.25);
+        }
+
+        .pilote-info {
+            flex: 1;
+        }
+
+        .pilote-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .ecurie-name {
+            color: #808080;
+            font-size: 1.05rem;
+        }
+
+        .sponsor-logo {
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .sponsor-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* Circuits Section */
+        .circuits-section {
+            padding: 2rem 1rem;
+        }
+
+        .circuits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .circuit-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            display: block;
+        }
+
+        .circuit-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(79, 172, 254, 0.5);
+            box-shadow: 0 20px 40px rgba(79, 172, 254, 0.35), 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .circuit-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            display: block;
+            border-radius: 0;
+        }
+
+        .circuit-card:hover .circuit-image {
+            transform: scale(1.1);
+        }
+
+        .circuit-info {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.95) 0%, rgba(15, 15, 15, 0.98) 100%);
+        }
+
+        .circuit-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+            line-height: 1.2;
+        }
+
+        .circuit-description {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Prevent layout shift */
+        .circuit-card,
+        .feature-card,
+        .pilote-card {
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            background: linear-gradient(90deg, 
+                rgba(0, 0, 0, 0) 0%, 
+                rgba(0, 0, 0, 0.4) 10%, 
+                rgba(0, 0, 0, 0.5) 50%, 
+                rgba(0, 0, 0, 0.4) 90%, 
+                rgba(0, 0, 0, 0) 100%);
+            position: relative;
+        }
+
+        .stats-section::before,
+        .stats-section::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+        }
+
+        .stats-section::before {
+            top: 0;
+        }
+
+        .stats-section::after {
+            bottom: 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #808080;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.5) 0%, rgba(5, 5, 5, 0.95) 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: #4facfe;
+            transform: translateX(5px);
+        }
+
+        .footer-links li {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+        }
+
+        .footer-description {
+            color: #808080;
+            line-height: 1.7;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            color: #606060;
+            font-size: 0.9rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .footer-logo img {
+            height: 35px;
+            width: auto;
+        }
+
+        .footer-logo span {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 8px 24px rgba(79, 172, 254, 0.4);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(79, 172, 254, 0.6);
+        }
+
+        /* Animation au scroll */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 968px) {
+            /* Body padding for safe areas */
+            body {
+                padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+            }
+
+            /* Header & Navigation */
+            .header {
+                padding: 1rem 1.5rem;
+                z-index: 1000;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+                min-width: 44px;
+                min-height: 44px;
+            }
+
+            .mobile-nav,
+            .mobile-overlay {
+                display: block;
+            }
+
+            .brand-name {
+                font-size: 1rem;
+            }
+
+            .logo-small {
+                height: 35px;
+            }
+
+            /* Hero Section */
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 7rem 1.5rem 2rem;
+                gap: 2rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                line-height: 1;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+                line-height: 1.6;
+                margin-bottom: 2rem;
+            }
+
+            .version-tag {
+                font-size: 0.8rem;
+                padding: 0.35rem 0.8rem;
+            }
+
+            .live-badge {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.5rem;
+            }
+
+            .hero-visual {
+                margin-top: 1rem;
+            }
+
+            /* CTA Buttons */
+            .cta-container {
+                flex-direction: row;
+                width: 100%;
+                gap: 0.5rem;
+            }
+
+            .cta-button,
+            .cta-secondary {
+                flex: 1;
+                justify-content: center;
+                text-align: center;
+                font-size: 0.75rem;
+                padding: 0.7rem 0.5rem;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .cta-secondary img {
+                width: 28px !important;
+                height: 28px !important;
+                margin-right: 6px !important;
+            }
+
+            .cta-button:active,
+            .cta-secondary:active {
+                transform: translateY(0);
+            }
+
+            /* Experience Slider */
+            .experience-section {
+                padding: 3rem 0;
+            }
+
+            .experience-slider-wrapper {
+                position: relative;
+                z-index: 1;
+            }
+
+            .experience-slide {
+                padding: 1.5rem 0.8rem;
+                position: relative;
+                z-index: 1;
+            }
+
+            .experience-controls {
+                flex-direction: row;
+                gap: 1rem;
+                margin-top: 2rem;
+                padding: 1.5rem 1rem;
+                justify-content: center;
+                align-items: center;
+                z-index: 50;
+                position: relative;
+            }
+
+            /* Hide text tabs on mobile, keep only arrows */
+            .experience-tabs {
+                display: none;
+            }
+
+            .experience-arrows {
+                display: flex;
+                gap: 2rem;
+                z-index: 60;
+                position: relative;
+            }
+
+            .experience-arrow {
+                width: 64px;
+                height: 64px;
+                font-size: 2rem;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: rgba(79, 172, 254, 0.3);
+                cursor: pointer;
+                position: relative;
+                z-index: 100;
+                background: rgba(79, 172, 254, 0.25) !important;
+                border: 3px solid rgba(79, 172, 254, 0.7) !important;
+                font-weight: bold;
+                box-shadow: 0 6px 16px rgba(79, 172, 254, 0.5) !important;
+            }
+
+            .experience-arrow:active {
+                transform: scale(0.88);
+                background: rgba(79, 172, 254, 0.5);
+                border-color: rgba(79, 172, 254, 0.8);
+                box-shadow: 0 2px 8px rgba(79, 172, 254, 0.5);
+            }
+
+            .experience-arrow:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+                background: rgba(255, 255, 255, 0.05);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+
+            /* Sections */
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .features-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .features-section,
+            .circuits-section,
+            .pilotes-section {
+                padding: 1rem 1rem;
+            }
+
+            /* Feature Cards */
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .feature-card {
+                padding: 1rem;
+                min-width: 0;
+            }
+
+            .feature-card:active {
+                transform: scale(0.98);
+            }
+
+            .feature-title {
+                font-size: 1rem;
+            }
+
+            .feature-description {
+                font-size: 0.85rem;
+            }
+
+            .feature-icon {
+                height: 50px;
+                font-size: 1.5rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .feature-icon img {
+                width: 36px;
+                height: 36px;
+            }
+
+            /* Circuit Cards - Image pleine largeur avec texte en overlay */
+            .circuits-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .circuit-card {
+                min-width: 0;
+                display: block;
+                overflow: hidden;
+                position: relative;
+                aspect-ratio: 16 / 9;
+            }
+
+            .circuit-card:active {
+                transform: scale(0.98);
+            }
+
+            .circuit-card:hover .circuit-image {
+                transform: scale(1.05);
+            }
+
+            .circuit-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                position: absolute;
+                top: 0;
+                left: 0;
+                border-radius: 0;
+            }
+
+            .circuit-info {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 1.5rem 1.2rem;
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 70%, transparent 100%);
+                z-index: 2;
+            }
+
+            .circuit-name {
+                font-size: 1.3rem;
+                margin-bottom: 0.6rem;
+                color: #ffffff;
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            }
+
+            .circuit-description {
+                font-size: 0.85rem;
+                line-height: 1.6;
+                color: rgba(255, 255, 255, 0.9);
+                text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+            }
+
+            /* Pilote Cards - 1 colonne layout horizontal stable */
+            .pilotes-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+                max-width: 550px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .pilote-card {
+                padding: 1.2rem;
+                flex-direction: row;
+                text-align: left;
+                min-width: 0;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .pilote-card:active {
+                transform: scale(0.99);
+            }
+
+            .pilote-info {
+                flex: 1;
+            }
+
+            .sponsor-logo {
+                width: 80px;
+                height: 80px;
+                margin-left: 1.2rem;
+                margin-top: 0;
+                flex-shrink: 0;
+            }
+
+            .pilote-name {
+                font-size: 1.2rem;
+                margin-bottom: 0.5rem;
+                word-break: break-word;
+                line-height: 1.3;
+            }
+
+            .ecurie-name {
+                font-size: 0.9rem;
+                word-break: break-word;
+                line-height: 1.4;
+            }
+
+            /* Footer */
+            .footer {
+                padding: 2rem 1.5rem 1.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            /* Back to Top */
+            .back-to-top {
+                bottom: 100px;
+                right: 1.5rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+                z-index: 999;
+            }
+
+            .back-to-top:active {
+                transform: translateY(-3px) scale(0.95);
+            }
+        }
+
+        /* Small Mobile Devices */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .hero {
+                padding: 6.5rem 1rem 1.5rem;
+            }
+
+            .section-title,
+            .features-section h2 {
+                font-size: 1.5rem;
+            }
+
+            /* Keep text tabs hidden on small mobile too */
+            .experience-tabs {
+                display: none;
+            }
+
+            .experience-arrows {
+                gap: 1.8rem;
+            }
+
+            .experience-arrow {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+                background: rgba(79, 172, 254, 0.25) !important;
+                border: 3px solid rgba(79, 172, 254, 0.7) !important;
+                font-weight: bold;
+                box-shadow: 0 6px 16px rgba(79, 172, 254, 0.5) !important;
+                position: relative;
+                z-index: 100;
+            }
+
+            .experience-arrow:active {
+                transform: scale(0.88);
+                background: rgba(79, 172, 254, 0.5);
+                border-color: rgba(79, 172, 254, 0.8);
+                box-shadow: 0 2px 8px rgba(79, 172, 254, 0.5);
+            }
+
+            .experience-arrow:disabled {
+                background: rgba(255, 255, 255, 0.05);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+
+            /* Keep horizontal layout for small screens */
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+
+            /* Circuits - garder le design overlay, réduire légèrement la hauteur */
+            .circuits-grid {
+                gap: 1.2rem;
+            }
+
+            .circuit-card {
+                aspect-ratio: 16 / 9;
+            }
+
+            .circuit-info {
+                padding: 1.2rem 1rem;
+            }
+
+            .circuit-name {
+                font-size: 1.15rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .circuit-description {
+                font-size: 0.8rem;
+                line-height: 1.5;
+            }
+
+            /* Pilotes - garder 1 colonne horizontal, adapter les tailles */
+            .pilotes-grid {
+                gap: 1rem;
+            }
+
+            .pilote-card {
+                padding: 1rem;
+            }
+
+            .sponsor-logo {
+                width: 70px;
+                height: 70px;
+                margin-left: 1rem;
+            }
+
+            .pilote-name {
+                font-size: 1.1rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .ecurie-name {
+                font-size: 0.85rem;
+            }
+
+            .feature-card {
+                padding: 1rem;
+            }
+
+            .feature-title {
+                font-size: 0.9rem;
+            }
+
+            .feature-description {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo-nav">
+                <img src="page-1-Photoroom.png" alt="Clipsou Explorer" class="logo-small">
+                <span class="brand-name">Clipsou Explorer</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Accueil</a></li>
+                <li><a href="#experience" data-slide="0">À Propos</a></li>
+                <li><a href="#experience" data-slide="1">Circuits</a></li>
+                <li><a href="#experience" data-slide="2">Pilotes</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <nav class="mobile-nav" id="mobileNav">
+        <ul>
+            <li><a href="#" class="mobile-nav-link" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Accueil</a></li>
+            <li><a href="#experience" class="mobile-nav-link" data-slide="0">À Propos</a></li>
+            <li><a href="#experience" class="mobile-nav-link" data-slide="1">Circuits</a></li>
+            <li><a href="#experience" class="mobile-nav-link" data-slide="2">Pilotes</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="version-tag">
+                <span class="live-badge">
+                    <span class="live-dot"></span>
+                    LIVE
+                </span>
+                Soir du 23 Octobre 2025
+            </span>
+            <h1>
+                Clipsou Explorer<br>
+                <span class="gradient-text">Championship</span>
+            </h1>
+            <p class="hero-description">
+                Une course de voiture épique entre joueurs sur GTA V (FiveM) moddé. 
+                Rendez-vous le soir du 23 octobre pour suivre l'événement en direct sur les chaînes YouTube de Mr Roxxor et Raiback !
+            </p>
+            <div class="cta-container">
+                <a href="https://www.youtube.com/@mrroxxor4369" target="_blank" class="cta-secondary">
+                    <img src="chaineYTprofil.jpg" alt="Mr Roxxor" style="width: 36px; height: 36px; border-radius: 50%; margin-right: 10px; vertical-align: middle;">
+                    Chaîne Mr Roxxor
+                </a>
+                <a href="https://www.youtube.com/@raiback9488" target="_blank" class="cta-secondary">
+                    <img src="Raiback.webp" alt="Raiback" style="width: 36px; height: 36px; border-radius: 50%; margin-right: 10px; vertical-align: middle;">
+                    Chaîne Raiback
+                </a>
+            </div>
+        </div>
+        <div class="hero-visual" id="trailer">
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/mae7mgCxulc" 
+                    title="Clipsou Explorer : la bande-annonce officielle ( Course Gta V )" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Slider -->
+    <section class="experience-section" id="experience">
+        <div class="experience-slider-wrapper">
+            <div class="experience-slider" id="experienceSlider">
+                <div class="experience-slide" data-slide="0">
+                    <section class="features-section scroll-reveal" id="features">
+                        <h2>Pourquoi Clipsou Explorer ?</h2>
+                        <div class="features-grid">
+                            <div class="feature-card scroll-reveal">
+                                <span class="feature-icon">🏎️</span>
+                                <h3 class="feature-title">Courses Intenses</h3>
+                                <p class="feature-description">Des circuits moddés sur mesure avec des véhicules customisés pour une expérience de course unique.</p>
+                            </div>
+                            <div class="feature-card scroll-reveal">
+                                <span class="feature-icon">
+                                    <img src="FiveM-Logo.png" alt="FiveM">
+                                </span>
+                                <h3 class="feature-title">FiveM Moddé</h3>
+                                <p class="feature-description">Une expérience GTA V complètement personnalisée avec mods exclusifs et gameplay optimisé.</p>
+                            </div>
+                            <div class="feature-card scroll-reveal">
+                                <span class="feature-icon">
+                                    <img src="Youtube_logo.png" alt="YouTube">
+                                </span>
+                                <h3 class="feature-title">Diffusion Live</h3>
+                                <p class="feature-description">Suivez toutes les courses en direct sur les chaînes YouTube Mr Roxxor et Raiback avec commentaires et replays.</p>
+                            </div>
+                            <div class="feature-card scroll-reveal">
+                                <span class="feature-icon">🏆</span>
+                                <h3 class="feature-title">Compétition</h3>
+                                <p class="feature-description">Les meilleures pilotes s'affrontent dans des courses spectaculaires et remportent le championnat.</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="experience-slide" data-slide="1">
+                    <section class="circuits-section scroll-reveal" id="circuits">
+                        <h2 class="section-title">Les Circuits</h2>
+                        <div class="circuits-grid">
+                            <div class="circuit-card scroll-reveal">
+                                <img src="Grand Circuit.webp" alt="Grand Circuit" class="circuit-image">
+                                <div class="circuit-info">
+                                    <h3 class="circuit-name">Grand Circuit</h3>
+                                    <p class="circuit-description">Un circuit urbain spectaculaire avec des virages serrés et des lignes droites à haute vitesse.</p>
+                                </div>
+                            </div>
+                            <div class="circuit-card scroll-reveal">
+                                <img src="Green Island.webp" alt="Green Island" class="circuit-image">
+                                <div class="circuit-info">
+                                    <h3 class="circuit-name">Green Island</h3>
+                                    <p class="circuit-description">Une piste technique au milieu de la nature verdoyante, défiant les pilotes à chaque courbe.</p>
+                                </div>
+                            </div>
+                            <div class="circuit-card scroll-reveal">
+                                <img src="Red Hill.webp" alt="Red Hill" class="circuit-image">
+                                <div class="circuit-info">
+                                    <h3 class="circuit-name">Red Hill</h3>
+                                    <p class="circuit-description">Un tracé montagneux intense avec des dénivelés impressionnants et des panoramas époustouflants.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="experience-slide" data-slide="2">
+                    <section class="pilotes-section scroll-reveal" id="pilotes">
+                        <h2 class="section-title">Pilotes & Écuries</h2>
+                        <div class="pilotes-grid">
+                            <div class="pilote-card scroll-reveal">
+                                <div class="pilote-info">
+                                    <h3 class="pilote-name">ESHI</h3>
+                                    <p class="ecurie-name">Écurie Urex</p>
+                                </div>
+                                <div class="sponsor-logo">
+                                    <img src="UREX.png" alt="Urex">
+                                </div>
+                            </div>
+                            <div class="pilote-card scroll-reveal">
+                                <div class="pilote-info">
+                                    <h3 class="pilote-name">Mr Roxxor</h3>
+                                    <p class="ecurie-name">Écurie Paté</p>
+                                </div>
+                                <div class="sponsor-logo">
+                                    <img src="PATE.png" alt="Paté">
+                                </div>
+                            </div>
+                            <div class="pilote-card scroll-reveal">
+                                <div class="pilote-info">
+                                    <h3 class="pilote-name">Ferrisbu</h3>
+                                    <p class="ecurie-name">Écurie Mumu</p>
+                                </div>
+                                <div class="sponsor-logo">
+                                    <img src="MUMU.png" alt="Mumu">
+                                </div>
+                            </div>
+                            <div class="pilote-card scroll-reveal">
+                                <div class="pilote-info">
+                                    <h3 class="pilote-name">Arth</h3>
+                                    <p class="ecurie-name">Écurie Clipsou Streaming</p>
+                                </div>
+                                <div class="sponsor-logo">
+                                    <img src="CLIPSOU.png" alt="Clipsou Streaming">
+                                </div>
+                            </div>
+                            <div class="pilote-card scroll-reveal">
+                                <div class="pilote-info">
+                                    <h3 class="pilote-name">Raiback</h3>
+                                    <p class="ecurie-name">Écurie Folex</p>
+                                </div>
+                                <div class="sponsor-logo">
+                                    <img src="FOLEX.png" alt="Folex">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="experience-controls">
+            <div class="experience-arrows">
+                <button class="experience-arrow" id="experiencePrev" aria-label="Section précédente">&#8249;</button>
+                <button class="experience-arrow" id="experienceNext" aria-label="Section suivante">&#8250;</button>
+            </div>
+            <div class="experience-tabs" id="experienceTabs">
+                <button class="experience-tab active" data-slide="0">Pourquoi Clipsou Explorer ?</button>
+                <button class="experience-tab" data-slide="1">Les Circuits</button>
+                <button class="experience-tab" data-slide="2">Pilotes & Écuries</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="page-1-Photoroom.png" alt="Clipsou Explorer">
+                    <span>Clipsou Explorer</span>
+                </div>
+                <p class="footer-description">
+                    Événement de course automobile sur GTA V FiveM. Rejoignez-nous le soir du 23 octobre 2025 en direct pour une expérience de course unique et spectaculaire.
+                </p>
+            </div>
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Accueil</a></li>
+                    <li><a href="#experience" data-slide="0">À Propos</a></li>
+                    <li><a href="#experience" data-slide="1">Circuits</a></li>
+                    <li><a href="#experience" data-slide="2">Pilotes</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Événement</h3>
+                <ul class="footer-links">
+                    <li><a href="https://www.youtube.com/@mrroxxor4369" target="_blank">Chaîne Mr Roxxor</a></li>
+                    <li><a href="https://www.youtube.com/@raiback9488" target="_blank">Chaîne Raiback</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Sponsors</h3>
+                <ul class="footer-links">
+                    <li>Urex</li>
+                    <li>Paté</li>
+                    <li>Mumu</li>
+                    <li>Clipsou Streaming</li>
+                    <li>Folex</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Clipsou Explorer. Tous droits réservés.</p>
+            <p>Événement FiveM GTA V - Saison 1</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Retour en haut">↑</button>
+
+    <script>
+        // Animation au scroll
+        const revealElements = document.querySelectorAll('.scroll-reveal');
+        
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const revealPoint = 100;
+            
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                
+                if (elementTop < windowHeight - revealPoint) {
+                    element.classList.add('revealed');
+                }
+            });
+        };
+        
+        // Vérifier au chargement et au scroll
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+        
+        // Animation initiale
+        revealOnScroll();
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        const toggleMobileMenu = () => {
+            mobileMenuToggle.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        };
+
+        const closeMobileMenu = () => {
+            mobileMenuToggle.classList.remove('active');
+            mobileNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        mobileMenuToggle?.addEventListener('click', toggleMobileMenu);
+        mobileOverlay?.addEventListener('click', closeMobileMenu);
+
+        // Close mobile menu when clicking on a link
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileMenu();
+            });
+        });
+
+        // Experience slider logic
+        const slider = document.getElementById('experienceSlider');
+        const slides = Array.from(document.querySelectorAll('.experience-slide'));
+        const prevBtn = document.getElementById('experiencePrev');
+        const nextBtn = document.getElementById('experienceNext');
+        const tabs = Array.from(document.querySelectorAll('.experience-tab'));
+        const navLinks = Array.from(document.querySelectorAll('.nav-links a[data-slide]'));
+        let currentSlide = 0;
+
+        const totalSlides = slides.length;
+
+        const setActiveTab = (index) => {
+            tabs.forEach(tab => tab.classList.toggle('active', Number(tab.dataset.slide) === index));
+            navLinks.forEach(link => link.classList.toggle('active', Number(link.dataset.slide) === index));
+        };
+
+        const updateArrows = () => {
+            if (!prevBtn || !nextBtn) return;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        };
+
+        const goToSlide = (index) => {
+            const boundedIndex = Math.max(0, Math.min(index, totalSlides - 1));
+            currentSlide = boundedIndex;
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            setActiveTab(currentSlide);
+            updateArrows();
+            revealOnScroll();
+        };
+
+        // Desktop clicks
+        prevBtn?.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            goToSlide(currentSlide - 1);
+        });
+
+        nextBtn?.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            goToSlide(currentSlide + 1);
+        });
+
+        // Mobile touch events
+        prevBtn?.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Prev button touched');
+            goToSlide(currentSlide - 1);
+        }, { passive: false });
+
+        nextBtn?.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Next button touched');
+            goToSlide(currentSlide + 1);
+        }, { passive: false });
+
+        // Fallback avec mousedown pour certains appareils
+        prevBtn?.addEventListener('mousedown', (e) => {
+            if (e.pointerType === 'touch' || window.innerWidth <= 968) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Prev button mousedown');
+                goToSlide(currentSlide - 1);
+            }
+        });
+
+        nextBtn?.addEventListener('mousedown', (e) => {
+            if (e.pointerType === 'touch' || window.innerWidth <= 968) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Next button mousedown');
+                goToSlide(currentSlide + 1);
+            }
+        });
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                goToSlide(Number(tab.dataset.slide));
+            });
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const targetSlide = Number(link.dataset.slide);
+                goToSlide(targetSlide);
+                document.getElementById('experience').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Mobile nav links with slider navigation
+        document.querySelectorAll('.mobile-nav-link[data-slide]').forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const targetSlide = Number(link.dataset.slide);
+                goToSlide(targetSlide);
+                document.getElementById('experience').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Footer links with slider navigation
+        document.querySelectorAll('.footer-links a[data-slide]').forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const targetSlide = Number(link.dataset.slide);
+                goToSlide(targetSlide);
+                document.getElementById('experience').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Initialize slider state
+        goToSlide(0);
+
+        // Back to top functionality & header scroll effect
+        const backToTopBtn = document.getElementById('backToTop');
+        const header = document.querySelector('.header');
+        
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+            
+            // Back to top button
+            if (scrollY > 500) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+            
+            // Header effect
+            if (scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('load', handleScroll);
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
